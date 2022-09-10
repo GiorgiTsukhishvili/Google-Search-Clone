@@ -26,7 +26,7 @@ const Results = () => {
     case "/search":
       return (
         <div className="flex flex-wrap flex-col justify-between space-y-6 sm:px-56">
-          {results &&
+          {results?.results &&
             results.results.map((item) => (
               <div key={v4()} className="md:w-3/5 w-full">
                 <a
@@ -54,60 +54,78 @@ const Results = () => {
     case "/image":
       return (
         <div className="flex flex-wrap justify-center items-start">
-          {results &&
-            results.image_results.map((item) => (
-              <a
-                href={item.link.href}
-                className="sm:p-3 p-5"
-                key={v4()}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img
-                  src={item.image.src}
-                  alt={item.link.title}
-                  loading="lazy"
-                  className="w-[300px] h-[300px] object-contain"
-                />
-                <p className="w-[300px] h-25 break-words text-sm mt-2">
-                  {item.link.title}
-                </p>
-              </a>
-            ))}
+          {results?.image_results
+            ? results.image_results.map((item) => (
+                <a
+                  href={item.link.href}
+                  className="sm:p-3 p-5"
+                  key={v4()}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src={item.image.src}
+                    alt={item.link.title}
+                    loading="lazy"
+                    className="w-[300px] h-[300px] object-contain"
+                  />
+                  <p className="w-[300px] h-25 break-words text-sm mt-2">
+                    {item.link.title}
+                  </p>
+                </a>
+              ))
+            : ""}
         </div>
       );
     case "/news":
       return (
         <div className="flex flex-wrap justify-between space-y-6 sm:px-56 items-center">
-          {results &&
-            results.entries.map((item) => (
-              <div key={v4()} className="md:w-2/5 w-full">
-                <a
-                  href={item.links[0].href}
-                  className="hover:underline"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p className="text-lg hover:underline text-blue-300 ">
-                    {item.title}
-                  </p>
-                </a>
-                <div className="flex gap-4">
+          {results?.entries
+            ? results.entries.map((item) => (
+                <div key={v4()} className="md:w-2/5 w-full">
                   <a
-                    href={item.source.href}
+                    href={item.links[0].href}
+                    className="hover:underline"
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:underline"
                   >
-                    {item.source.href}
+                    <p className="text-lg hover:underline text-blue-300 ">
+                      {item.title}
+                    </p>
                   </a>
+                  <div className="flex gap-4">
+                    <a
+                      href={item.source.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:underline"
+                    >
+                      {item.source.href}
+                    </a>
+                  </div>
                 </div>
+              ))
+            : ""}
+        </div>
+      );
+    case "/videos":
+      return (
+        <div className="flex flex-wrap justify-center items-center ">
+          {results?.results &&
+            results.results.map((video) => (
+              <div key={v4()} className="p-2">
+                {video.additional_links && (
+                  <ReactPlayer
+                    url={video.additional_links[0].href}
+                    controls
+                    width="455px"
+                    height="300px"
+                  />
+                )}
               </div>
             ))}
         </div>
       );
-    case "/videos":
-      return <p>se</p>;
     default:
       return <h1>Error</h1>;
   }

@@ -1,5 +1,10 @@
+interface Videos {
+  href: string;
+  text: string;
+}
+
 interface ResultsDatains {
-  additional_links: [href: string, text: string][];
+  additional_links: Videos[];
   cities: {
     domain: string;
     span: string;
