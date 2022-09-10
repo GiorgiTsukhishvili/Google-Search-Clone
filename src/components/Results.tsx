@@ -11,18 +11,24 @@ const Results = () => {
   const location = useLocation();
 
   useEffect(() => {
-    getResults("/search/q=JavaScript Mastery&num=40");
-  }, []);
+    if (searchTerm) {
+      if (location.pathname === "/videos") {
+        getResults(`/search/q=${searchTerm} videos`);
+      } else {
+        getResults(`${location.pathname}/q=${searchTerm}&num=40`);
+      }
+    }
+  }, [searchTerm, location.pathname]);
 
   if (isLoading) return <Loading />;
 
   switch (location.pathname) {
     case "/search":
       return (
-        <div className="flex flex-wrap justify-between space-y-6 sm:px-56">
+        <div className="flex flex-wrap flex-col justify-between space-y-6 sm:px-56">
           {results &&
             results.results.map((item) => (
-              <div key={v4()} className="md:w-2/5 w-full">
+              <div key={v4()} className="md:w-3/5 w-full">
                 <a
                   href={item.link}
                   className=""
@@ -34,13 +40,42 @@ const Results = () => {
                       ? item.link.substring(0, 30)
                       : item.link}
                   </p>
+                  <p className="text-lg hover:underline text-blue-300 w-[60%] ">
+                    {item.title}
+                  </p>
+                  <p className="text-sm text-[#bdc1c6] w-[70%]">
+                    {item.description}
+                  </p>
                 </a>
               </div>
             ))}
         </div>
       );
-    case "/images":
-      return <p>se</p>;
+    case "/image":
+      return (
+        <div className="flex flex-wrap justify-center items-start">
+          {results &&
+            results.image_results.map((item) => (
+              <a
+                href={item.link.href}
+                className="sm:p-3 p-5"
+                key={v4()}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src={item.image.src}
+                  alt={item.link.title}
+                  loading="lazy"
+                  className="w-[300px] h-[300px] object-contain"
+                />
+                <p className="w-[300px] h-25 break-words text-sm mt-2">
+                  {item.link.title}
+                </p>
+              </a>
+            ))}
+        </div>
+      );
     case "/news":
       return <p>se</p>;
     case "/videos":

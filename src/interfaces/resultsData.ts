@@ -9,6 +9,14 @@ interface ResultsDatains {
   title: string;
 }
 
+interface ImageResults {
+  image: { src: string };
+  link: {
+    href: string;
+    title: string;
+  };
+}
+
 export interface ResultsData {
   answers: string[];
   device_region: string;
@@ -16,5 +24,5 @@ export interface ResultsData {
   results: ResultsDatains[];
   total: number;
   ts: number;
-  image_results: string[];
+  image_results: ImageResults[];
 }
