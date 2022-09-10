@@ -17,11 +17,19 @@ interface ImageResults {
   };
 }
 
+interface Entries {
+  links: { href: string }[];
+  id: string;
+  source: { href: string };
+  title: string;
+}
+
 export interface ResultsData {
   answers: string[];
   device_region: string;
   device_type: string;
   results: ResultsDatains[];
+  entries: Entries[];
   total: number;
   ts: number;
   image_results: ImageResults[];

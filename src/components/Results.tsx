@@ -77,7 +77,35 @@ const Results = () => {
         </div>
       );
     case "/news":
-      return <p>se</p>;
+      return (
+        <div className="flex flex-wrap justify-between space-y-6 sm:px-56 items-center">
+          {results &&
+            results.entries.map((item) => (
+              <div key={v4()} className="md:w-2/5 w-full">
+                <a
+                  href={item.links[0].href}
+                  className="hover:underline"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <p className="text-lg hover:underline text-blue-300 ">
+                    {item.title}
+                  </p>
+                </a>
+                <div className="flex gap-4">
+                  <a
+                    href={item.source.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:underline"
+                  >
+                    {item.source.href}
+                  </a>
+                </div>
+              </div>
+            ))}
+        </div>
+      );
     case "/videos":
       return <p>se</p>;
     default:
