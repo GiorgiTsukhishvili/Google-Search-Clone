@@ -1,4 +1,4 @@
-interface Videos {
+export interface Videos {
   href: string;
   text: string;
 }

@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import ReactPlayer from "react-player";
-import { v4 } from "uuid";
 import Loading from "./Loading";
 
 import { useResultContext } from "../contexts/ResultContext";
+import {
+  ResultsImages,
+  ResultsNews,
+  ResultsSearch,
+  ResultsVideos,
+} from "./resultsComponents";
 
 const Results = () => {
   const { results, isLoading, getResults, searchTerm } = useResultContext();
@@ -26,104 +30,27 @@ const Results = () => {
     case "/search":
       return (
         <div className="flex min-h-[80vh] flex-wrap  justify-between space-y-6 sm:px-56">
-          {results?.results &&
-            results.results.map((item) => (
-              <div key={v4()} className="md:w-3/5 w-full">
-                <a
-                  href={item.link}
-                  className=""
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p className="text-sm">
-                    {item.link.length > 30
-                      ? item.link.substring(0, 30)
-                      : item.link}
-                  </p>
-                  <p className="text-lg hover:underline text-blue-300 w-[60%] ">
-                    {item.title}
-                  </p>
-                  <p className="text-sm text-[#bdc1c6] w-[70%]">
-                    {item.description}
-                  </p>
-                </a>
-              </div>
-            ))}
+          {results?.results && <ResultsSearch results={results.results} />}
         </div>
       );
     case "/image":
       return (
         <div className="flex min-h-[80vh] flex-wrap justify-center items-start">
-          {results?.image_results
-            ? results.image_results.map((item) => (
-                <a
-                  href={item.link.href}
-                  className="sm:p-3 p-5"
-                  key={v4()}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                    src={item.image.src}
-                    alt={item.link.title}
-                    loading="lazy"
-                    className="w-[300px] h-[300px] object-contain"
-                  />
-                  <p className="w-[300px] h-25 break-words text-sm mt-2">
-                    {item.link.title}
-                  </p>
-                </a>
-              ))
-            : ""}
+          {results?.image_results && (
+            <ResultsImages results={results.image_results} />
+          )}
         </div>
       );
     case "/news":
       return (
         <div className="flex min-h-[80vh] flex-wrap justify-between space-y-6 sm:px-56 items-center">
-          {results?.entries
-            ? results.entries.map((item) => (
-                <div key={v4()} className="md:w-2/5 w-full">
-                  <a
-                    href={item.links[0].href}
-                    className="hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <p className="text-lg hover:underline text-blue-300 ">
-                      {item.title}
-                    </p>
-                  </a>
-                  <div className="flex gap-4">
-                    <a
-                      href={item.source.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:underline"
-                    >
-                      {item.source.href}
-                    </a>
-                  </div>
-                </div>
-              ))
-            : ""}
+          {results?.entries && <ResultsNews results={results.entries} />}
         </div>
       );
     case "/videos":
       return (
         <div className="flex min-h-[80vh] flex-wrap justify-center items-center ">
-          {results?.results &&
-            results.results.map((video) => (
-              <div key={v4()} className="p-2">
-                {video.additional_links && (
-                  <ReactPlayer
-                    url={video.additional_links[0].href}
-                    controls
-                    width="455px"
-                    height="300px"
-                  />
-                )}
-              </div>
-            ))}
+          {results?.results && <ResultsVideos results={results.results} />}
         </div>
       );
     default:
