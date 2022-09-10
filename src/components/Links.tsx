@@ -11,7 +11,7 @@ const links: { url: string; text: string }[] = [
 
 const Links = () => {
   return (
-    <div className="flex justify-start pl-0 sm:pl-[204px]  gap-5 items-center mt-4 w-[90vw]">
+    <div className="flex justify-start  gap-5 items-center mt-4 w-[60vw]">
       {links.map((item) => (
         <Link
           to={item.url}

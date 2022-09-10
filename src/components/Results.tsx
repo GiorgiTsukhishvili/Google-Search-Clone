@@ -25,7 +25,7 @@ const Results = () => {
   switch (location.pathname) {
     case "/search":
       return (
-        <div className="flex flex-wrap flex-col justify-between space-y-6 sm:px-56">
+        <div className="flex min-h-[80vh] flex-wrap  justify-between space-y-6 sm:px-56">
           {results?.results &&
             results.results.map((item) => (
               <div key={v4()} className="md:w-3/5 w-full">
@@ -53,7 +53,7 @@ const Results = () => {
       );
     case "/image":
       return (
-        <div className="flex flex-wrap justify-center items-start">
+        <div className="flex min-h-[80vh] flex-wrap justify-center items-start">
           {results?.image_results
             ? results.image_results.map((item) => (
                 <a
@@ -79,7 +79,7 @@ const Results = () => {
       );
     case "/news":
       return (
-        <div className="flex flex-wrap justify-between space-y-6 sm:px-56 items-center">
+        <div className="flex min-h-[80vh] flex-wrap justify-between space-y-6 sm:px-56 items-center">
           {results?.entries
             ? results.entries.map((item) => (
                 <div key={v4()} className="md:w-2/5 w-full">
@@ -110,7 +110,7 @@ const Results = () => {
       );
     case "/videos":
       return (
-        <div className="flex flex-wrap justify-center items-center ">
+        <div className="flex min-h-[80vh] flex-wrap justify-center items-center ">
           {results?.results &&
             results.results.map((video) => (
               <div key={v4()} className="p-2">
