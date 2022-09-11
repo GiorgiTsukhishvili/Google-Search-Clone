@@ -1,12 +1,24 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 
 import { v4 } from "uuid";
 import { ResultsImagesNews } from "../../interfaces/resultsComponentsint";
+import Pagination from "../pagination/Pagination";
+import usePageCalc from "../../hooks/usePageCalc";
 
 const ResultsNews = ({ results }: { results: ResultsImagesNews[] }) => {
+  const {
+    currentPage,
+    setCurrentPage,
+    indexOfFirstSearch,
+    indexOfLastSearch,
+    searchPerPage,
+  } = usePageCalc();
+
+  const currentsearch = results.slice(indexOfFirstSearch, indexOfLastSearch);
+
   return (
-    <Fragment>
-      {results.map((item) => (
+    <div>
+      {currentsearch.map((item) => (
         <div key={v4()} className="md:w-2/5 w-full">
           <a
             href={item.links[0].href}
@@ -30,7 +42,14 @@ const ResultsNews = ({ results }: { results: ResultsImagesNews[] }) => {
           </div>
         </div>
       ))}
-    </Fragment>
+
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        length={results.length}
+        perPage={searchPerPage}
+      />
+    </div>
   );
 };
 

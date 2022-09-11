@@ -12,21 +12,25 @@ export const ResultProvider = ({ children }: { children: ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const getResults = async (type: string) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    const response = await fetch(`${baseUrl}${type}`, {
-      method: "GET",
-      headers: {
-        "X-User-Agent": "desktop",
-        "X-Proxy-Location": "EU",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY!,
-        "X-RapidAPI-Host": "google-search3.p.rapidapi.com",
-      },
-    });
-    const data = await response.json();
+      const response = await fetch(`${baseUrl}${type}`, {
+        method: "GET",
+        headers: {
+          "X-User-Agent": "desktop",
+          "X-Proxy-Location": "US",
+          "X-RapidAPI-Key": process.env.REACT_APP_API_KEY!,
+          "X-RapidAPI-Host": "google-search3.p.rapidapi.com",
+        },
+      });
+      const data = await response.json();
 
-    setResults(data);
-    setIsLoading(false);
+      setResults(data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
